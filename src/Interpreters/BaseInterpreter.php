@@ -3,6 +3,7 @@
 namespace App\Interpreters;
 
 use App\Actions\Action;
+use App\Actions\CloseAction;
 use App\Actions\ConnectDBAction;
 use App\Actions\HelpAction;
 use App\Exceptions\InvalidCommandException;
@@ -62,6 +63,10 @@ class BaseInterpreter implements Interpreter {
 
     private function connect() : Action {
         return new ConnectDBAction();
+    }
+
+    private function exit() : Action {
+        return new CloseAction();
     }
 
 

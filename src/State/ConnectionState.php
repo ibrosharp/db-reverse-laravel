@@ -36,5 +36,11 @@ final class ConnectionState {
         return static::$dbInfo;
     }
 
+    public static function destruct() : void {
+        static::$dbInfo = null;
+        static::$model = null;
+        static::$status = false;
+    }
+
 
 }

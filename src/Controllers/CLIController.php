@@ -73,7 +73,7 @@ class CLIController extends Controller {
 
 
 
-        }while($line != "exit");
+        }while(true);
 
         Interactor::sendSucceessMessage("Bye...");
     }

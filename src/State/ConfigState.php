@@ -21,11 +21,11 @@ class ConfigState {
         $config =  static::$config["database"];
 
         $driver = (isset($config["driver"]))? $config["driver"] : "mysql";
-        $host = (isset($config["driver"]))? $config["driver"] : "localhost";
-        $username = (isset($config["driver"]))? $config["driver"] : "root";
-        $password = (isset($config["driver"]))? $config["driver"] : "";
-        $port = (isset($config["driver"]))? $config["driver"] : "80";
-        $database = (isset($config["driver"]))? $config["driver"] : "";
+        $host = (isset($config["host"]))? $config["host"] : "localhost";
+        $username = (isset($config["username"]))? $config["username"] : "root";
+        $password = (isset($config["password"]))? $config["password"] : "";
+        $port = (isset($config["port"]))? $config["port"] : "80";
+        $database = (isset($config["database"]))? $config["database"] : "";
 
         return new DatabaseInfo($host,$port,$username,$password,$database,$driver);
             

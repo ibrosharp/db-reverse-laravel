@@ -12,7 +12,7 @@ $config = require_once("./src/config/config.php");
 
 ConfigState::loadConfig($config);
 
-print_r(ConfigState::getFileSystemConfiguration());
+
 
 // array_map('unlink', glob($config["output_dir"]."/seeders/*.*"));
 
