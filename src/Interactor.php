@@ -5,60 +5,59 @@ namespace App;
 
 class Interactor {
 
- 
-    public function __construct()
-    {
-        
-    }
 
-    public function sendSucceessMessage(string $message) : void {
+    public static function sendSucceessMessage(string $message) : void {
 
         echo PHP_EOL;
 
-        $this->changeTextColor("Green");
+        static::changeTextColor("Green");
 
         echo $message;
 
         echo PHP_EOL;
+
+        static::changeTextColor("Default");
         
     }
 
-    public function sendErrorMessage(string $message) : void {
+    public static function sendErrorMessage(string $message) : void {
 
         echo PHP_EOL;
 
-        $this->changeTextColor("Red");
+        static::changeTextColor("Red");
 
         echo $message;
 
         echo PHP_EOL;
+
+        static::changeTextColor("Default");
         
     }
 
-    public function getDatabaseInfo() : DatabaseInfo {
+    public static function getDatabaseInfo() : DatabaseInfo {
 
-        $dbDriver = $this->getDBDriver();
+        $dbDriver = static::getDBDriver();
        
-        $hostName = $this->getHostName();
+        $hostName = static::getHostName();
 
-        $port = $this->getPortNumber();
+        $port = static::getPortNumber();
        
-        $dbName = $this->getDatabaseName();
+        $dbName = static::getDatabaseName();
 
-        $username = $this->getUserName();
+        $username = static::getUserName();
 
-        $password = $this->getPassword();
+        $password = static::getPassword();
 
         return new DatabaseInfo($hostName,$port,$username,$password,$dbName,$dbDriver);
             
       
     }
 
-    private function changeBackgroundColor(string $color) {
+    private static function changeBackgroundColor(string $color) {
 
     }
 
-    private function changeTextColor(string $color) {
+    private static function changeTextColor(string $color) {
 
         $colors = [
            "Default" => "\e[39m",
@@ -83,9 +82,9 @@ class Interactor {
 
     }
 
-    private function  getDatabaseName() : string {
+    private static function  getDatabaseName() : string {
 
-        $this->changeTextColor("Light gray");
+        static::changeTextColor("Light gray");
 
         while(true) {
             echo PHP_EOL;
@@ -94,12 +93,14 @@ class Interactor {
             if($line) break;
         }
 
+        static::changeTextColor("Default");
+
         return $line;
     }
 
-    private function getPortNumber() : string  {
+    private static function getPortNumber() : string  {
 
-        $this->changeTextColor("Yellow");
+        static::changeTextColor("Yellow");
 
         while(true) {
 
@@ -113,22 +114,26 @@ class Interactor {
 
         }
 
+        static::changeTextColor("Default");
+
         return $line ?: "80";
     }
 
-    private function getHostName() : string  {
+    private static function getHostName() : string  {
 
-        $this->changeTextColor("Blue");
+        static::changeTextColor("Blue");
 
         echo PHP_EOL;
         $line = readline("Enter Host name (Default: localhost): ");
+
+        static::changeTextColor("Default");
 
         return $line ?: "localhost";
 
     }
 
-    private function getDBDriver() : string {
-        $this->changeTextColor("Red");
+    private static function getDBDriver() : string {
+        static::changeTextColor("Red");
         echo PHP_EOL;
         
         do {
@@ -154,30 +159,76 @@ class Interactor {
 
         }while($continue);
 
+        static::changeTextColor("Default");
+
+
         return $dbDriver;
     }
 
-    private function getUserName() : string {
+    private static function getUserName() : string {
 
         echo PHP_EOL;
 
-        $this->changeTextColor("White");
+        static::changeTextColor("White");
         
         $line = readline("Enter database username (Default: root): ");
 
+        static::changeTextColor("Default");
+
         return $line ?: "root";
+
+      
+
 
     }
 
-    private function getPassword() : string {
+    private static function getPassword() : string {
 
         echo PHP_EOL;
 
-        $this->changeTextColor("Green");
+        static::changeTextColor("Green");
 
         $line = readline("Enter database password (Default: ): ");
 
+        static::changeTextColor("Default");
+
         return $line ?: $line;
 
+     
+
+    }
+
+    public static function sendWelcome() {
+
+        static::changeTextColor("Blue");
+        echo PHP_EOL;
+        echo    "*********************************************************************************************" .PHP_EOL;
+        echo    '*  ____  ____     ____                                  _                                _  *'. PHP_EOL. 
+                '* |  _ \| __ )   |  _ \ _____   _____ _ __ ___  ___    | |    __ _ _ __ __ _ __    _____| | *'. PHP_EOL.
+                "* | | | |  _ \   | |_) / _ \ \ / / _ \ '__/ __|/ _ \   | |   / _` | '__/ _` |\ \  / / _ \ | *" .PHP_EOL.
+                '* | |_| | |_) |  |  _ <  __/\ V /  __/ |  \__ \  __/   | |__| (_| | | | (_| | \ \/ /  __/ | *' .PHP_EOL.
+                '* |____/|____/___|_| \_\___| \_/ \___|_|  |___/\___|___|_____\__,_|_|  \__,_|  \__/ \___|_| *' .PHP_EOL.
+                '*          |_____|                               |_____|                                    *' .PHP_EOL.
+                '*                                                                                           *' .PHP_EOL;
+        echo    "*********************************************************************************************" .PHP_EOL;
+
+        
+        echo"Author :  Ibrahim Abdulsamad" .PHP_EOL . 
+            "Email  :  abdulsamadibrahim210@gmail.com" . PHP_EOL .
+            "GitHub :  https://github.com/ib-Jkid" . PHP_EOL;
+
+        echo PHP_EOL;
+
+        echo "Generate migrations, models, seeders for Database" . PHP_EOL;
+
+        static::changeTextColor("Default");
+
+        echo "Type Help to display available commands" . PHP_EOL;
+    }
+
+    public static function showHelp() {
+        echo "showing help";
+                                                                                      
+        
     }
 }

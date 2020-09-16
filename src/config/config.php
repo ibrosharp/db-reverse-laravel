@@ -1,6 +1,7 @@
 <?php 
 
 return [
+    
     "database" => [
         "driver" => "mysql",
         "host" => "localhost",
@@ -9,5 +10,9 @@ return [
         "port" => "80",
         "database" => "ceedwest"
     ],
+    "filesystem" => [
+        "output_dir" => __DIR__."/../../output",
+    ]
+   
 
 ];

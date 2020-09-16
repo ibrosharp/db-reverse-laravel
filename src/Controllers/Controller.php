@@ -7,14 +7,14 @@ use App\Interactor;
 
 abstract class Controller {
 
-    protected $interactor;
+   
 
-    public function __construct(Interactor $interactor)
+    public function __construct()
     {
-        $this->interactor = $interactor;
+      
     }
 
-    abstract public function connect();
+  
 
   
 }

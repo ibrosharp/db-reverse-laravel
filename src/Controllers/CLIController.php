@@ -2,27 +2,34 @@
 
 namespace App\Controllers;
 
+use App\Exceptions\FailedExecutionException;
+use App\Exceptions\InvalidCommandException;
 use App\Interactor;
+use App\Interpreters\BaseInterpreter;
 use App\Model;
+use App\State\ConfigState;
 use App\State\ConnectionState;
+use Exception;
 use PDOException;
 
 class CLIController extends Controller {
 
+    private $interpreter;
+
     public function __construct()
     {
-        parent::__construct(new Interactor());
+        $this->interpreter = new BaseInterpreter();
     }
 
     public function connect() {
 
-        $dataBaseInfo = $this->interactor->getDatabaseInfo();
+        $dataBaseInfo = ConfigState::getDBConfiguration();
 
         try {
 
             $model = Model::getInstance($dataBaseInfo);
 
-            $this->interactor->sendSucceessMessage("Database connected successfully!!!");
+            Interactor::sendSucceessMessage("Database connected successfully!!!");
 
             ConnectionState::setConnectionStatus(true);
 
@@ -30,11 +37,42 @@ class CLIController extends Controller {
 
         }catch(PDOException $e) {
 
-            $this->interactor->sendErrorMessage($e->getMessage());
+            Interactor::sendErrorMessage($e->getMessage());
             
         }
-       
+    }
+   
+
+    public function run() {
         
+        Interactor::sendWelcome();
+
+        do {
+
+            $line = readline("> ");
+
+            try {
+
+                $action = $this->interpreter->interprete($line);
+                $action->execute();
+
+            }catch(Exception $e) {
+
+                Interactor::sendErrorMessage($e->getMessage());
+
+            }
+
+         
+           
+           
+
+
+
+
+
+        }while($line != "exit");
+
+        Interactor::sendSucceessMessage("Bye...");
     }
   
 }
