@@ -1,0 +1,20 @@
+{
+    "name": "ib-jkid/sd-reverse-laravel",
+    "description": "A php package for converting database data to laravel seeders, migration and models",
+    "type": "library",
+    "require": {
+        "php": "^7.4",
+        "monolog/monolog": "^2.0@dev"
+    },
+    "license": "MIT",
+    "authors": [{
+        "name": "Ibrahim Abdulsamad",
+        "email": "abdulsamadibrahim210@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "App\\": "src/"
+        }
+    },
+    "minimum-stability": "dev"
+}
