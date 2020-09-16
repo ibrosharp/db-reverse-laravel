@@ -1,5 +1,5 @@
 {
-    "name": "ib-jkid/sd-reverse-laravel",
+    "name": "ib-jkid/db-reverse-laravel",
     "description": "A php package for converting database data to laravel seeders, migration and models",
     "type": "library",
     "require": {
