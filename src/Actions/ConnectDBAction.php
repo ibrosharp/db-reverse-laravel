@@ -23,6 +23,8 @@ class ConnectDBAction implements Action {
 
             ConnectionState::setModel($model);
 
+            ConnectionState::setDbInfo($dataBaseInfo);
+
         }catch(PDOException $e) {
 
             Interactor::sendErrorMessage($e->getMessage());

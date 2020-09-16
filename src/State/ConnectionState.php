@@ -2,12 +2,14 @@
 
 namespace App\State;
 
+use App\DatabaseInfo;
 use App\Model;
 
 final class ConnectionState {
 
     private static $status = false;
     private static $model;
+    private static $dbInfo;
  
 
     public static function isConnected() : bool {
@@ -24,6 +26,14 @@ final class ConnectionState {
 
     public static function getModel() :  Model {
         return static::$model;
+    }
+
+    public static function setDbInfo(DatabaseInfo $info) : void {
+        static::$dbInfo = $info;
+    }
+
+    public static function getDbInfo() : DatabaseInfo {
+        return static::$dbInfo;
     }
 
 

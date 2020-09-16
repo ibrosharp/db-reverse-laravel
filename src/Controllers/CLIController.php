@@ -23,6 +23,7 @@ class CLIController extends Controller {
 
     public function connect() {
 
+        Interactor::sendMessage("Attempting database connection...");
         $dataBaseInfo = ConfigState::getDBConfiguration();
 
         try {
@@ -34,6 +35,8 @@ class CLIController extends Controller {
             ConnectionState::setConnectionStatus(true);
 
             ConnectionState::setModel($model);
+
+            ConnectionState::setDbInfo($dataBaseInfo);
 
         }catch(PDOException $e) {
 

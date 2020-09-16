@@ -18,9 +18,16 @@ class ConfigState {
 
         if(!isset(static::$config["database"])) throw new ConfigurationException("No database configuration Configuration");
         
-        return static::$config["database"];
+        $config =  static::$config["database"];
 
-        return new DatabaseInfo();
+        $driver = (isset($config["driver"]))? $config["driver"] : "mysql";
+        $host = (isset($config["driver"]))? $config["driver"] : "localhost";
+        $username = (isset($config["driver"]))? $config["driver"] : "root";
+        $password = (isset($config["driver"]))? $config["driver"] : "";
+        $port = (isset($config["driver"]))? $config["driver"] : "80";
+        $database = (isset($config["driver"]))? $config["driver"] : "";
+
+        return new DatabaseInfo($host,$port,$username,$password,$database,$driver);
             
     }
 

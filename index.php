@@ -25,6 +25,8 @@ print_r(ConfigState::getFileSystemConfiguration());
 // file_put_contents(__DIR__."/output/seeders/test.txt","Hello World. Testing!");
 
 
-$controller = new CLIController();
+$app = new CLIController();
 
-$controller->run();
+$app->connect();
+
+$app->run();

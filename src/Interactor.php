@@ -231,4 +231,18 @@ class Interactor {
                                                                                       
         
     }
+
+    public static function sendMessage(string $message) : void {
+        
+        echo PHP_EOL;
+
+        static::changeTextColor("Green");
+
+        echo $message;
+
+        echo PHP_EOL;
+
+        static::changeTextColor("Default");
+    
+    }
 }
