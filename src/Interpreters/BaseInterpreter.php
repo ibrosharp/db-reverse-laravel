@@ -5,7 +5,9 @@ namespace App\Interpreters;
 use App\Actions\Action;
 use App\Actions\CloseAction;
 use App\Actions\ConnectDBAction;
+use App\Actions\CreateSeederAction;
 use App\Actions\HelpAction;
+use App\Actions\StatusAction;
 use App\Exceptions\InvalidCommandException;
 use Throwable;
 
@@ -67,6 +69,41 @@ class BaseInterpreter implements Interpreter {
 
     private function exit() : Action {
         return new CloseAction();
+    }
+
+    private function status() :  Action {
+        return new StatusAction();
+    }
+
+    private function show() {
+
+    }
+
+    private function create(string $type, string $tableName = null) : Action {
+
+        /** @var Action */
+        $action = null;
+
+        switch($type) {
+            case "migration":
+            case "migrations": 
+                throw new InvalidCommandException();
+            break;
+                
+            case "seeders":
+               $action = new CreateSeederAction($tableName);
+            break;
+
+            case "models": 
+                throw new InvalidCommandException();
+            break;
+
+            default: 
+                throw new InvalidCommandException();
+            break;
+        }
+
+        return $action;
     }
 
 

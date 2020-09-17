@@ -8,7 +8,9 @@ use App\Model;
 final class ConnectionState {
 
     private static $status = false;
+    /** @var Model */
     private static $model;
+    /** @var DatabaseInfo */
     private static $dbInfo;
  
 

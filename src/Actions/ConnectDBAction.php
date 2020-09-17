@@ -12,10 +12,12 @@ class ConnectDBAction implements Action {
     public function execute() : void {
 
         $dataBaseInfo = Interactor::getDatabaseInfo();
+        ConnectionState::setDbInfo($dataBaseInfo);
 
         try {
 
             $model = Model::getInstance($dataBaseInfo);
+            
 
             Interactor::sendSucceessMessage("Database connected successfully!!!");
 
@@ -23,7 +25,7 @@ class ConnectDBAction implements Action {
 
             ConnectionState::setModel($model);
 
-            ConnectionState::setDbInfo($dataBaseInfo);
+           
 
         }catch(PDOException $e) {
 

@@ -198,7 +198,7 @@ class Interactor {
 
     }
 
-    public static function sendWelcome() {
+    public static function sendWelcome() : void {
 
         static::changeTextColor("Blue");
         echo PHP_EOL;
@@ -224,10 +224,48 @@ class Interactor {
         static::changeTextColor("Default");
 
         echo "Type Help to display available commands" . PHP_EOL;
+
+        echo PHP_EOL;
     }
 
-    public static function showHelp() {
-        echo "showing help";
+    public static function showHelp() : void {
+        
+
+        echo PHP_EOL;
+
+        static::changeTextColor("Yellow");
+
+        echo "_________________________________________________________________________________________________________________ " .PHP_EOL. 
+            "|              Commands               |                                Description                                |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "| connect                             | Connects to a new database                                                |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "| create laravel seeders              | Create database seeders for a laravel application                         |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "| create laravel models               | Create database models for a laravel application                          |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "| create laravel migrations           | Create database migrations for a laravel application                      |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "|              Commands               |                                Description                                |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "|              Commands               |                                Description                                |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "|              Commands               |                                Description                                |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "|              Commands               |                                Description                                |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "| status                              | Show connection status                                                    |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
+            "| help                                | Show this message                                                         |".PHP_EOL.
+            "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL;
+            "| exit                                | Exit the app                                                              |".PHP_EOL.
+            "|_____________________________________|___________________________________________________________________________|".PHP_EOL;
+
+
+
+        echo PHP_EOL;
+
+        static::changeTextColor("Default");
                                                                                       
         
     }
@@ -236,7 +274,7 @@ class Interactor {
         
         echo PHP_EOL;
 
-        static::changeTextColor("Green");
+        static::changeTextColor("Yellow");
 
         echo $message;
 
@@ -244,5 +282,36 @@ class Interactor {
 
         static::changeTextColor("Default");
     
+    }
+
+
+    public static function showStatus(bool $connected, DatabaseInfo $info) : void {
+
+        echo PHP_EOL;
+
+        static::changeTextColor("Red");
+
+        $connectionStatus = ($connected)? "connected" : "disconnected";
+        echo "__________________________________________________________________ " .PHP_EOL. 
+        "               Variable               |             Status              ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "  Connected                           | {$connectionStatus}            ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "  Database Name                       | {$info->dbName()}              ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "  Username                            | {$info->username()}            ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "  Port                                | {$info->port()}                ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "  Driver                              | {$info->driver()}              ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "  Host                                | {$info->host()}                ".PHP_EOL.
+        "|-------------------------------------|--------------------------------|".PHP_EOL.
+        "|_____________________________________|________________________________|".PHP_EOL;
+
+        echo PHP_EOL;
+
+        static::changeTextColor("Default");
+                                              
     }
 }

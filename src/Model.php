@@ -4,6 +4,7 @@ namespace App;
 
 use App\DataObject\Table;
 use App\DataObject\Column;
+use App\Exceptions\DatabaseException;
 use PDO;
 use PDOException;
 use SplObjectStorage;
@@ -45,6 +46,44 @@ class Model {
         }
 
         return $tables;
+    }
+
+    public function getSingleTable(string $tableName) : Table {
+
+        $query = $this->connection->prepare("EXPLAIN {$tableName}");
+
+        $query->execute();
+
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        if(count($data) < 1) throw new DatabaseException("Invalid table name: {$tableName}");
+
+        $columns = new SplObjectStorage;
+
+        foreach($data as $column) {
+           
+            $columns->attach(new Column($column["Field"],$column["Type"],$column["Null"],$column["Key"],$column["Default"],$column["Extra"]));
+
+        }
+
+        $table = new Table($tableName);
+
+        $table->setColumns($columns);
+
+        return $table;
+
+        
+    }
+
+    public function addTableContents(Table $table) : void {
+        $query = $this->connection->prepare("SELECT * FROM {$table->getName()}");
+
+        $query->execute();
+
+        $data = $query->fetchAll(PDO::FETCH_ASSOC);
+
+        $table->addContents($data);
+
     }
 
     public function getColumns(Table $table) : SplObjectStorage {

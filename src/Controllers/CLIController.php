@@ -2,8 +2,7 @@
 
 namespace App\Controllers;
 
-use App\Exceptions\FailedExecutionException;
-use App\Exceptions\InvalidCommandException;
+
 use App\Interactor;
 use App\Interpreters\BaseInterpreter;
 use App\Model;
@@ -21,10 +20,11 @@ class CLIController extends Controller {
         $this->interpreter = new BaseInterpreter();
     }
 
-    public function connect() {
+    public function connect() : void {
 
         Interactor::sendMessage("Attempting database connection...");
         $dataBaseInfo = ConfigState::getDBConfiguration();
+        ConnectionState::setDbInfo($dataBaseInfo);
 
         try {
 
@@ -36,7 +36,7 @@ class CLIController extends Controller {
 
             ConnectionState::setModel($model);
 
-            ConnectionState::setDbInfo($dataBaseInfo);
+           
 
         }catch(PDOException $e) {
 
@@ -46,7 +46,7 @@ class CLIController extends Controller {
     }
    
 
-    public function run() {
+    public function run() : void{
         
         Interactor::sendWelcome();
 
@@ -64,14 +64,6 @@ class CLIController extends Controller {
                 Interactor::sendErrorMessage($e->getMessage());
 
             }
-
-         
-           
-           
-
-
-
-
 
         }while(true);
 
