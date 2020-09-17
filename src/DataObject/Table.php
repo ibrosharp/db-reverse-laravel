@@ -4,7 +4,7 @@ namespace App\DataObject;
 
 use SplObjectStorage;
 
-class Table implements Schemable {
+class Table {
 
     private $contents;
     private $columns;
@@ -36,8 +36,4 @@ class Table implements Schemable {
         return $this->columns;
     }
 
-    public function getSchema(): string
-    {
-        return "";
-    }
 }
