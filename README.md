@@ -18,12 +18,11 @@
 + Run the script via terminal 
 + Type **help** on the terminal to display the full command list and thier functions
 
-#### Example: 
+    #### Example: 
 
-    `php index.php`
-    `> create migration users`
+    `php index.php
+    > create migration users`
 
 ### Requirement
 
 + PHP > 7.3
-+  
