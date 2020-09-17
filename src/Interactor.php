@@ -240,11 +240,11 @@ class Interactor {
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
             "| connect                             | Connects to a new database                                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "| create laravel seeders              | Create database seeders for a laravel application                         |".PHP_EOL.
+            "| create seeder <table-name>          | Create database seeder for <table-name> table                             |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "| create laravel models               | Create database models for a laravel application                          |".PHP_EOL.
+            "| create model <table-name>           | Create database models for <table-name> table                             |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "| create laravel migrations           | Create database migrations for a laravel application                      |".PHP_EOL.
+            "| create migration <table-name>       | Create database migrations for <table-name> table                         |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
             "|              Commands               |                                Description                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
