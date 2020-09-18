@@ -17,6 +17,16 @@ class SeedersCreator implements FileCreator {
     public function __construct() 
     {
         $this->path = ConfigState::getFileSystemConfiguration()["output_dir"]."/seeders";
+
+                
+        if(file_exists($this->path)) {
+
+            array_map('unlink', glob($this->path."/*.*"));
+
+            rmdir($this->path);
+        }
+      
+        mkdir($this->path,0777,true);
     }
 
     public function setTable(Table $table) : void {
@@ -68,7 +78,7 @@ class SeedersCreator implements FileCreator {
 
         "use Illuminate\Database\Seeder;\n\n".
 
-        "class ".$this->className."TableSeeder extends Seeder\n{\n".
+        "class ".$this->className." extends Seeder\n{\n".
 
             "\tpublic function run()\n\t{\n".
 
@@ -89,14 +99,6 @@ class SeedersCreator implements FileCreator {
     }
 
     private function writeToFile(string $content) : void {
-        
-        if(file_exists($this->path)) {
-            array_map('unlink', glob($this->path."/*.*"));
-
-            rmdir($this->path);
-        }
-      
-        mkdir($this->path,0777,true);
 
         file_put_contents("{$this->path}/{$this->fileName}",$content);
     }

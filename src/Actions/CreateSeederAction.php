@@ -9,10 +9,9 @@ use App\State\ConnectionState;
 class CreateSeederAction implements Action {
 
     
-    public function __construct(string $tableName) {
+    public function __construct(?string $tableName) {
 
         $this->tableName = $tableName;
-        
 
     }
 
@@ -22,16 +21,34 @@ class CreateSeederAction implements Action {
 
         $model = ConnectionState::getModel();
 
-        $table = $model->getSingleTable($this->tableName);
-
-        $model->addTableContents($table);
-
         $creator = new SeedersCreator();
 
-        $creator->setTable($table);
+        if(!$this->tableName) {
 
-        $creator->createFile();
+            $tables = $model->getTables();
+
+            foreach($tables as $table) {
+
+                $model->addTableContents($table);
+        
+                $creator->setTable($table);
+        
+                $creator->createFile();
+            }
+
+        }else {
+
+            $table = $model->getSingleTable($this->tableName);
+
+            $model->addTableContents($table);
+    
+            $creator->setTable($table);
+    
+            $creator->createFile();
+    
+        }
 
     }
+
     
 }

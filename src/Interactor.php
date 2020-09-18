@@ -240,17 +240,17 @@ class Interactor {
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
             "| connect                             | Connects to a new database                                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "| create seeder <table-name>          | Create database seeder for <table-name> table                             |".PHP_EOL.
+            "| create seeders <table-name>         | Create database seeder for <table-name> table                             |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "| create model <table-name>           | Create database models for <table-name> table                             |".PHP_EOL.
+            "| create models <table-name>          | Create database models for <table-name> table                             |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "| create migration <table-name>       | Create database migrations for <table-name> table                         |".PHP_EOL.
+            "| create migrations <table-name>      | Create database migrations for <table-name> table                         |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "|              Commands               |                                Description                                |".PHP_EOL.
+            "| create migrations                   |                                Description                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "|              Commands               |                                Description                                |".PHP_EOL.
+            "| create seeders                      |                                Description                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
-            "|              Commands               |                                Description                                |".PHP_EOL.
+            "| create models                       |                                Description                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.
             "|              Commands               |                                Description                                |".PHP_EOL.
             "|-------------------------------------|---------------------------------------------------------------------------|".PHP_EOL.

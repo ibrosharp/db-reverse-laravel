@@ -85,11 +85,10 @@ class BaseInterpreter implements Interpreter {
         $action = null;
 
         switch($type) {
-            case "migration":
             case "migrations": 
                 throw new InvalidCommandException();
             break;
-                
+            
             case "seeders":
                $action = new CreateSeederAction($tableName);
             break;
