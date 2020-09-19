@@ -86,7 +86,7 @@ class Model {
 
     }
 
-    public function getColumns(Table $table) : SplObjectStorage {
+    public function addColumns(Table $table) : void {
 
         $query = $this->connection->prepare("SHOW COLUMNS FROM {$table->getName()}");
 
@@ -103,7 +103,8 @@ class Model {
 
         }
 
-        return $columns;
+        $table->setColumns($columns);
+
     }
 
     public function __destruct()

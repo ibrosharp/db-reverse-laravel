@@ -5,6 +5,7 @@ namespace App\Interpreters;
 use App\Actions\Action;
 use App\Actions\CloseAction;
 use App\Actions\ConnectDBAction;
+use App\Actions\CreateMigrationAction;
 use App\Actions\CreateSeederAction;
 use App\Actions\HelpAction;
 use App\Actions\StatusAction;
@@ -86,7 +87,7 @@ class BaseInterpreter implements Interpreter {
 
         switch($type) {
             case "migrations": 
-                throw new InvalidCommandException();
+                $action = new CreateMigrationAction($tableName);
             break;
             
             case "seeders":
@@ -94,7 +95,7 @@ class BaseInterpreter implements Interpreter {
             break;
 
             case "models": 
-                throw new InvalidCommandException();
+                $action = new CreateSeederAction($tableName);
             break;
 
             default: 

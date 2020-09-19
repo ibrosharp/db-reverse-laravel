@@ -2,6 +2,8 @@
 
 namespace App\DataObject;
 
+use App\Lib\EloquentTranslator;
+
 class Column {
     public function __construct( $name, $dataType, $nullable, $key,  $default,  $extra)
     {
@@ -26,7 +28,15 @@ class Column {
     }
 
     public function toSchemaString() : string {
-        return "";
-        //"$table->integer('id')->nullable()->default()->autoIncrement()"
+
+        $eloquentDataType = EloquentTranslator::translateDataType($this->dataType,$this->name);
+        $eloquentExtas = EloquentTranslator::translateExtras($this->extra);
+        $eloquentNullable = EloquentTranslator::translateNullable($this->default);
+        $eloquentKey = EloquentTranslator::translateKey($this->key);
+
+        return "\$table->{$eloquentDataType}{$eloquentKey}{$eloquentNullable}{$eloquentExtas};";
+        
     }
+
+   
 }
