@@ -31,10 +31,15 @@ class Column {
 
         $eloquentDataType = EloquentTranslator::translateDataType($this->dataType,$this->name);
         $eloquentExtas = EloquentTranslator::translateExtras($this->extra);
-        $eloquentNullable = EloquentTranslator::translateNullable($this->default);
+        $eloquentNullable = EloquentTranslator::translateNullable($this->nullable);
         $eloquentKey = EloquentTranslator::translateKey($this->key);
+        $eloquentDefault = EloquentTranslator::translateDefault($this->default);
 
-        return "\$table->{$eloquentDataType}{$eloquentKey}{$eloquentNullable}{$eloquentExtas};";
+        if($eloquentDataType == "") {
+            return "";
+        }
+
+        return "\$table->{$eloquentDataType}{$eloquentKey}{$eloquentNullable}{$eloquentExtas}{$eloquentDefault};";
         
     }
 

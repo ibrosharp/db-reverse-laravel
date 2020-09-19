@@ -152,7 +152,15 @@ class EloquentTranslator {
             break;
 
             case "timestamp": 
-                $migrationString = "timestamp('{$field}')";
+                if($field == "deleted_at") {
+                    $migrationString = "softDeletes()";
+                }
+                elseif($field == "created_at") {
+                    $migrationString = "timestamps()";
+                }elseif($field != "updated_at") {
+                    $migrationString = "timestamp('{$field}')";
+                }
+                   
             break;
 
             case "tinyint": 
@@ -204,7 +212,7 @@ class EloquentTranslator {
 
     public static function translateNullable(?string $nullable) : string {
 
-        if(strtolower($nullable) == "yes") return "->nullable();";
+        if(strtolower($nullable) == "yes") return "->nullable()";
 
         return "";
 
@@ -235,5 +243,11 @@ class EloquentTranslator {
 
         return $eloquentString;
         
+    }
+
+    public static function translateDefault(?string $default) : string {
+        if($default == ""|| $default == null) return "";
+
+        return "->default(\DB::raw('{$default}'))";
     }
 }
