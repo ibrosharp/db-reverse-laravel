@@ -6,6 +6,7 @@ use App\Actions\Action;
 use App\Actions\CloseAction;
 use App\Actions\ConnectDBAction;
 use App\Actions\CreateMigrationAction;
+use App\Actions\CreateModelAction;
 use App\Actions\CreateSeederAction;
 use App\Actions\HelpAction;
 use App\Actions\StatusAction;
@@ -95,7 +96,7 @@ class BaseInterpreter implements Interpreter {
             break;
 
             case "models": 
-                $action = new CreateSeederAction($tableName);
+                $action = new CreateModelAction($tableName);
             break;
 
             default: 
