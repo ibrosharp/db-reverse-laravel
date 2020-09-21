@@ -5,7 +5,7 @@ namespace App\Creators;
 use App\DataObject\Table;
 use App\Exceptions\FileSystemException;
 use App\Interactor;
-use App\setup\Inflector;
+use App\Lib\Inflector;
 use App\State\ConfigState;
 use App\State\ConnectionState;
 
@@ -46,32 +46,38 @@ class ModelsCreator implements FileCreator {
 
         Interactor::sendMessage("Creating : {$this->fileName}");
 
-        $this->writeToFile($this->wrapFrame($));
+        $columns = $this->getColumns();
+
+        $this->writeToFile($this->wrapFrame($columns["fillables"],$columns["hidden"],$this->getRelationsips()));
 
         Interactor::sendSucceessMessage("Created :{$this->fileName}");
 
     }
 
-    private function getFillbles() : string {
-        $content = "";
+    private function getColumns() : array {
 
-        foreach ($this->table->getContents() as $data) {
-            $content .= "\t\t\t[\n";
-                foreach ($data as $columnName=>$value) {
-                    $content .=(strlen($value) > 0)?  "\t\t\t\t'" . $columnName . "' => '" . ($value) . "',\n" : 
-                     "\t\t\t\t'" . $columnName . "' => null,\n";
-                }
-            $content .= "\t\t\t],\n";
+        $fillables = "";
+        $hidden = "";
+        foreach($this->table->getColums() as $column) {
+            if(preg_match("/(pass|created_at|updated_at|password)/", $column->getName()) === 1) {
+                $hidden .= "\t\t'{$column->getName()}',\n";
+                continue;
+            }
+
+            $fillables .= "\t\t'{$column->getName()}',\n";
         }
-
-        return $content;
+        return [
+            "fillables" => $fillables,
+            "hidden" => $hidden];
     }
 
-    private function getHidden() : string  {
-        return "";
+    private function getRelationsips() : string { 
+        return "\t\tpublic function notYet() {\n".
+            "\t\t\t\$this->hasMany('App\None');\n".
+        "\t}";
     }
 
-    private function wrapFrame($fillables,$hidden,$relationShips = "") : string {
+    private function wrapFrame($fillables,$hidden,$relationShips) : string {
 
         $properties = "".
         
@@ -86,13 +92,18 @@ class ModelsCreator implements FileCreator {
 
         "class {$this->className} extends Model {\n". 
         
-            "\tprotected \$table = '{$this->table->getName()}';\n".
+            "\tprotected \$table = '{$this->table->getName()}';\n\n".
 
             "\tprotected \$fillable = [\n".
-                $fillables. 
-                $hidden.
-                $relationShips.
-            "\t];\n".
+                $fillables. PHP_EOL.
+              
+            "\t];\n\n".
+
+            "\tprotected \$hidden = [\n". 
+                $hidden.  PHP_EOL.
+            "\t];\n\n".
+
+            $relationShips.  PHP_EOL.
 
         "}\n";
       

@@ -27,6 +27,10 @@ class Column {
         ];
     }
 
+    public function getName(): string {
+        return $this->name;
+    }
+
     public function toSchemaString() : string {
 
         $eloquentDataType = EloquentTranslator::translateDataType($this->dataType,$this->name);
