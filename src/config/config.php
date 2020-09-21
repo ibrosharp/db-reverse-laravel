@@ -8,7 +8,7 @@ return [
         "username" => "street",
         "password" => "qwertyuiop", 
         "port" => "80",
-        "database" => "ceedwest"
+        "database" => "lumen"
     ],
     "filesystem" => [
         "output_dir" => __DIR__."/../../output",

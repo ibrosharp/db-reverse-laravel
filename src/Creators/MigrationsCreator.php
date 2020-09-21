@@ -14,6 +14,7 @@ class MigrationsCreator implements FileCreator {
     private $className;
     private $fileName;
     private $path;
+    private $fileCount;
     public function __construct() 
     {
         $this->path = ConfigState::getFileSystemConfiguration()["output_dir"]."/migrations";
@@ -27,6 +28,8 @@ class MigrationsCreator implements FileCreator {
         }
       
         mkdir($this->path,0777,true);
+
+        $this->fileCount = 0;
     }
 
     public function setTable(Table $table) : void {
@@ -41,7 +44,7 @@ class MigrationsCreator implements FileCreator {
 
         $time = $time % 10000;
 
-        $this->fileName = "{$date}_{$time}_create_{$table->getName()}_table.php";
+        $this->fileName = "{$date}_{$time}{$this->fileCount}_create_{$table->getName()}_table.php";
 
     }
 
@@ -51,25 +54,72 @@ class MigrationsCreator implements FileCreator {
 
         Interactor::sendMessage("Creating : {$this->fileName}");
 
-        $this->writeToFile($this->wrapFrame());
+        $this->writeToFile($this->wrapFrame($this->getTopContent(),$this->getButtomContent()));
 
         Interactor::sendSucceessMessage("Created :{$this->fileName}");
 
+        $this->fileCount++;
+
+    }
+
+    public function createContraints(Table $table) {
+
+        $this->fileCount++;
+
+        $this->table = $table;
+
+        $this->className = "Add".str_replace(" ", "", ucwords(str_replace("_", " ", $table->getName())))."ForeignKey";
+
+        $time = time();
+
+        $date = date("Y_m_d", $time);
+
+        $time = $time % 10000;
+
+        $this->fileName = "{$date}_{$time}{$this->fileCount}_add_{$table->getName()}_foreign_key.php";
+        
+
+        $topContent = "\t\tSchema::table('lists', function(Blueprint \$table) {\n";
+
+        $bottomContent = $topContent;
+
+        
+        foreach($table->getContraints() as $contraints) {
+
+            print_r($contraints);
+            $topContent .= "\t\t\t\$table->foreign('{$contraints['foreign_key']}')->references('{$contraints['external_key']}')->on('{$contraints['external_table']}')->onDelete('cascade');\n";
+
+            $bottomContent .= "\t\t\t\$table->dropForeign('{$contraints['foreign_key']}');\n";
+        }
+
+        $topContent .= "\t\t});\n";
+
+        $bottomContent .= "\t\t});\n";
+       
+
+
+        $this->writeToFile($this->wrapFrame($topContent,$bottomContent));
     }
 
   
     private function getTopContent() : string {
 
-        $content = "";
+        $content = "\t\tSchema::create('{$this->table->getName()}', function (Blueprint \$table) {\n";
 
         foreach($this->table->getColums() as $column) {
             $content .= "\t\t\t{$column->toSchemaString()}\n";
         }
 
+        $content .= "\t\t});\n";
+
         return $content;
     }
 
-    private function wrapFrame() : string {
+    private function getButtomContent() : string {
+        return  "\t\tSchema::dropIfExists('{$this->table->getName()}');\n";
+    }
+
+    private function wrapFrame(string $topContent,string $bottomContent) : string {
 
         $properties = "".
         "<?php\n\n".
@@ -82,9 +132,7 @@ class MigrationsCreator implements FileCreator {
 
             "\tpublic function up()\n".
             "\t{\n".
-                "\t\tSchema::create('{$this->table->getName()}', function (Blueprint \$table) {\n".
-                   $this->getTopContent().
-                "\t\t});\n".
+                $topContent.
             "\t}\n\n".
 
             "\t/**\n".
@@ -95,7 +143,7 @@ class MigrationsCreator implements FileCreator {
 
             "\tpublic function down()\n".
             "\t{\n".
-                "\t\tSchema::dropIfExists('{$this->table->getName()}');\n".
+               $bottomContent.
             "\t}\n\n".
 
         "}";
@@ -106,4 +154,11 @@ class MigrationsCreator implements FileCreator {
 
         file_put_contents("{$this->path}/{$this->fileName}",$content);
     }
+
+    public function __destruct()
+    {
+        Interactor::sendSucceessMessage("Total Migrations created: {$this->fileCount}");
+    }
+
+
 }

@@ -48,6 +48,40 @@ class Model {
         return $tables;
     }
 
+    public function addTableContraints(Table $table) {
+        
+        $query = $this->connection->prepare("show create table {$table->getName()}");
+
+        $query->execute();
+
+        $data = $query->fetchAll(PDO::FETCH_NUM);
+
+
+       // print_r($data);
+
+        $dataArray = explode(",", $data[0][1]);
+
+        $constrains = array();
+
+        foreach($dataArray as $line) {
+
+            if( preg_match("/CONSTRAINT/",$line) ) {
+
+                preg_match_all("/`.*?`/",$line,$array);
+
+                array_push($constrains,[
+                    "constraints" => trim($array[0][0],"`"),
+                    "foreign_key" => trim($array[0][1],"`"),
+                    "external_table" => trim($array[0][2],"`"),
+                    "external_key" => trim($array[0][3],"`")
+                ]);
+            }
+        }
+       
+    
+       $table->addContraints($constrains);
+
+    }
     public function getSingleTable(string $tableName) : Table {
 
         $query = $this->connection->prepare("EXPLAIN {$tableName}");

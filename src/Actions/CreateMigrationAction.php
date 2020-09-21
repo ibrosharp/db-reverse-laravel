@@ -27,23 +27,39 @@ class CreateMigrationAction implements Action {
 
             $tables = $model->getTables();
 
+            $constraintTables = array();
+
             foreach($tables as $table) {
                 
                 $model->addColumns($table);
-    
+
+                $model->addTableContraints($table);
+
                 $creator->setTable($table);
+
+                if(count($table->getContraints()) > 0) {
+                    array_push($constraintTables,$table);
+                } 
         
                 $creator->createFile();
+            }
+
+            foreach($constraintTables as $table) {
+                $creator->createContraints($table);
             }
 
          
         }else {
 
             $table = $model->getSingleTable($this->tableName);
+
+            $model->addTableContraints($table);
     
             $creator->setTable($table);
     
             $creator->createFile();
+
+            $creator->createContraints($table);
     
         }
 

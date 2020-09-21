@@ -9,10 +9,12 @@ class Table {
     private $contents;
     private $columns;
     private $name;
+    private $contraints;
 
     public function __construct(string $tableName)
     {
         $this->name = $tableName;
+        $this->contraints = array();
     }
 
 
@@ -34,6 +36,14 @@ class Table {
 
     public function getColums() : SplObjectStorage {
         return $this->columns;
+    }
+
+    public function addContraints(array $contraints) : void {
+        $this->contraints = $contraints;
+    }
+
+    public function getContraints() : array {
+        return $this->contraints;
     }
 
 }
