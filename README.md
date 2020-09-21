@@ -79,11 +79,17 @@
 
          Variable        |         Status              
     | ------------------ | ---------------------- |
-    |    Connected       | connected            
-    |    Database Name   | lumen              
-    |    Username        | username            
-    |    Port            | 80                
-    |    Driver          | mysql              
+
+    |    Connected       | connected  
+
+    |    Database Name   | lumen       
+
+    |    Username        | username     
+
+    |    Port            | 80     
+
+    |    Driver          | mysql       
+           
     |    Host            | localhost                
 
 
