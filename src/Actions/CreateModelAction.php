@@ -2,6 +2,7 @@
 
 namespace App\Actions;
 
+use App\Creators\ModelsCreator;
 use App\Creators\SeedersCreator;
 use App\Exceptions\FailedExecutionException;
 use App\State\ConnectionState;
@@ -21,14 +22,19 @@ class CreateModelAction implements Action {
 
         $model = ConnectionState::getModel();
 
-        $creator = new SeedersCreator();
+        $creator = new ModelsCreator();
 
         if(!$this->tableName) {
 
             $tables = $model->getTables();
 
             foreach($tables as $table) {
+                
+                $model->addColumns($table); 
 
+                $creator->setTable($table);
+
+                $creator->createFile();
                
             }
 
@@ -36,7 +42,11 @@ class CreateModelAction implements Action {
 
             $table = $model->getSingleTable($this->tableName);
 
-            
+            $model->addColumns($table); 
+
+            $creator->setTable($table);
+
+            $creator->createFile();
     
         }
 
