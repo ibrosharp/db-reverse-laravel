@@ -46,30 +46,21 @@
 
     #### Display Help
 
-    > help
+    >> help
 
     #### Output
 
-    |              Commands               |                                Description                                |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | connect                             | Connects to a new database                                                |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | create seeders <table-name>         | Create database seeder for <table-name> table                             |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | create models <table-name>          | Create database models for <table-name> table                             |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | create migrations <table-name>      | Create database migrations for <table-name> table                         |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | create migrations                   | Create migrations file for all tables                                     |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | create seeders                      | Create seeders for all tables                                             |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | create models                       | Create models for all tables                                              |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | status                              | Show connection status                                                    |
-    |-------------------------------------|---------------------------------------------------------------------------|
-    | help                                | Show this message                                                         |
-    |-------------------------------------|---------------------------------------------------------------------------|
+    |              Commands               |                    Description                        |
+    |-------------------------------------|-------------------------------------------------------|
+    | connect                             | Connects to a new database                            | 
+    | create seeders <table-name>         | Create database seeder for <table-name> table         |
+    | create models <table-name>          | Create database models for <table-name> table         |
+    | create migrations <table-name>      | Create database migrations for <table-name> table     |
+    | create migrations                   | Create migrations file for all tables                 |
+    | create seeders                      | Create seeders for all tables                         |
+    | create models                       | Create models for all tables                          |
+    | status                              | Show connection status                                |
+    | help                                | Show this message                                     |
 
     #### Connection Status Check
 
@@ -85,12 +76,6 @@
     |    Port            | 80     
     |    Driver          | mysql       
     |    Host            | localhost                
-
-
-| Syntax      | Description |
-| ----------- | ----------- |
-| Header      | Title       |
-| Paragraph   | Text        |
 
 
 
