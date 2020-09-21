@@ -20,8 +20,8 @@
 
     #### Example: 
 
-    `php index.php
-    > create migration users`
+    > php index.php
+    > create migration users
 
 ### Requirement
 
