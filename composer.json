@@ -16,5 +16,8 @@
             "App\\": "src/"
         }
     },
-    "minimum-stability": "dev"
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^9.4@dev"
+    }
 }
