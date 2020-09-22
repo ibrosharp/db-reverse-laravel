@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Test;
+namespace Test\Unit;
 
 use App\Actions\CloseAction;
 use App\Actions\ConnectDBAction;
