@@ -8,9 +8,12 @@ use App\Actions\ConnectDBAction;
 use App\Actions\CreateMigrationAction;
 use App\Actions\CreateModelAction;
 use App\Actions\CreateSeederAction;
+use App\Actions\GenerateCrudControllersAction;
+use App\Actions\GenerateCrudRoutesAction;
 use App\Actions\HelpAction;
 use App\Actions\StatusAction;
 use App\Exceptions\InvalidCommandException;
+use App\Interactor;
 use Throwable;
 
 class BaseInterpreter implements Interpreter {
@@ -41,6 +44,10 @@ class BaseInterpreter implements Interpreter {
                 case 3:
                     $execute = $commands[0];
                     return $this->$execute($commands[1],$commands[2]);
+                break;
+                case 4:
+                    $execute = $commands[0];
+                    return $this->$execute($commands[1],$commands[2],$commands[3]);
                 break;
                 default: 
                     throw new InvalidCommandException();
@@ -105,6 +112,28 @@ class BaseInterpreter implements Interpreter {
         }
 
         return $action;
+    }
+
+    private function generate(string $subject,string $type, string $tableName = null) {
+       
+        switch($subject) {
+            case "crud": 
+                $type = "generateCrud".ucwords($type);
+                return $this->$type($tableName);
+            break;
+            default: 
+                throw new InvalidCommandException();
+            break;
+        }
+    }
+
+    private function generateCrudControllers(?string $tableName) {
+    
+        return new GenerateCrudControllersAction($tableName);
+    }
+
+    private function generateCrudRoutes(?string $tableName) {
+        return new GenerateCrudRoutesAction($tableName);
     }
 
 
