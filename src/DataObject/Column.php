@@ -31,15 +31,20 @@ class Column {
         return $this->name;
     }
 
+    public function getType() : string {
+        return $this->dataType;
+    }
+
     public function isPrimary() {
-        if(strtolower($this->key) == "pri" ) return true;
-        return false;
+        return (strtolower($this->key) == "pri" );
     }
 
     public function isTimestamp() {
-        if(($this->name == "created_at" || $this->name == "updated_at") && strtolower($this->nullable) == "yes" ) return true;
+        return (($this->name == "created_at" || $this->name == "updated_at") && strtolower($this->nullable) == "yes" );
+    }
 
-        return false;
+    public function isNullable() : bool {
+        return (strtolower($this->nullable) == "yes");
     }
 
     public function toSchemaString() : string {

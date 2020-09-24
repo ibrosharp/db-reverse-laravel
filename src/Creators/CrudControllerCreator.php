@@ -6,6 +6,7 @@ use App\DataObject\Table;
 use App\Exceptions\FileSystemException;
 use App\Interactor;
 use App\Lib\Inflector;
+use App\Lib\ValidationTranslator;
 use App\State\ConfigState;
 use App\State\ConnectionState;
 
@@ -176,15 +177,19 @@ class CrudControllerCreator implements FileCreator {
     }
 
     private function  validations() : string  {
-        $content = "";
-        //"\t\t\$validator = Validator::make(\$request->all(),[\n";
-        //         "image" => "",
-        //         "first_name" => "required|string",
-        //         "phone_number" => "required|numeric|digits:11",
-        //         "last_name" => "required|string"
-        //     ]);
+        $content = "".
 
-           //     if($validator->fails()) return $this->failureResponse(401,$validator->errors()->first());\
+        "\t\t\$validator = Validator::make(\$request->all(),[\n";
+
+        foreach($this->table->getColums() as $column) {
+            if($column->isPrimary() || $column->isTimestamp()) continue;
+            $validationString = ValidationTranslator::getValidationString($column);
+            $content .= "\t\t\t'{$column->getName()}' => '{$validationString}' ,\n";
+        }
+
+        $content .= "\t\t]);\n\n".
+
+        "\t\tif(\$validator->fails()) return response()->json(['status'=> false,'message' => \$validator->errors()->first()],500);\n\n";
 
         return $content;
     }

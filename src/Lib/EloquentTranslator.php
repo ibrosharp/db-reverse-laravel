@@ -168,11 +168,7 @@ class EloquentTranslator {
                 $migrationString = "tinyInteger('{$field}',{$size[0]})";
             break;
 
-            case "tinyint": 
-                $size = explode(")",$val[1]);
-                $migrationString = "tinyInteger('{$field}',{$size[0]})";
-            break;
-
+        
             case "year": 
                 $migrationString = "year('{$field}')";
             break;
