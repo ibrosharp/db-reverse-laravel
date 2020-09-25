@@ -52,6 +52,7 @@
     | create migrations                   | Create migrations file for all tables                 |
     | create seeders                      | Create seeders for all tables                         |
     | create models                       | Create models for all tables                          |
+    | generate crud controllers           | Create controllers with read,updated,delete functions |
     | status                              | Show connection status                                |
     | help                                | Show this message                                     |
 
