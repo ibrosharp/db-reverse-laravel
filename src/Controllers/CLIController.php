@@ -10,14 +10,19 @@ use App\State\ConfigState;
 use App\State\ConnectionState;
 use Exception;
 use PDOException;
+use SplDoublyLinkedList;
+
 
 class CLIController extends Controller {
 
     private $interpreter;
+    /** @var SplDoublyLinkedList */
+    private $commandStack;
 
     public function __construct()
     {
         $this->interpreter = new BaseInterpreter();
+        $this->commandStack = new SplDoublyLinkedList();
     }
 
     public function connect() : void {
@@ -47,12 +52,50 @@ class CLIController extends Controller {
    
 
     public function run() : void{
+
+        echo "Laravel_DB_Helper -> ";
         
         Interactor::sendWelcome();
 
         do {
+          
+          
 
-            $line = readline("> ");
+            $line = "";
+
+            while ($c = fread(STDIN, 1)) {
+
+             
+            
+                if($c  == PHP_EOL) {
+                    $this->commandStack->unshift($line);
+                    $this->commandStack->rewind();
+                    if(strlen($line) > 0) break;
+                }
+
+                if(ord($c) == 65) {
+                    $line = "";
+                    if(!$this->commandStack->isEmpty()) {
+                        $line = $this->commandStack->current();
+                        $this->commandStack->next();
+                       
+                    }
+                   
+                }elseif(ord($c) == 66 ){
+                    
+                }elseif(ord($c) == 127) {
+                    $line = substr($line,0,-1);
+                  
+                }else {
+                    $line .= $c;
+                }
+
+                
+                
+                echo "\r\033[K";
+                echo "Laravel_DB_Helper -> ".$line;
+             
+            }
 
             try {
 

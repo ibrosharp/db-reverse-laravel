@@ -1,4 +1,6 @@
 <?php
+#!/usr/bin/php
+system("stty -icanon");
 
 use App\Controllers\CLIController;
 use App\State\ConfigState;
@@ -14,3 +16,7 @@ $app = new CLIController();
 $app->connect();
 
 $app->run();
+
+
+
+
