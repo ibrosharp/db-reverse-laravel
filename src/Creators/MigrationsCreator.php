@@ -86,7 +86,6 @@ class MigrationsCreator implements FileCreator {
         
         foreach($table->getContraints() as $contraints) {
 
-            
             $topContent .= "\t\t\t\$table->foreign('{$contraints['foreign_key']}')->references('{$contraints['external_key']}')->on('{$contraints['external_table']}')->onDelete('cascade');\n";
 
             $bottomContent .= "\t\t\t\$table->dropForeign('{$contraints['foreign_key']}');\n";
