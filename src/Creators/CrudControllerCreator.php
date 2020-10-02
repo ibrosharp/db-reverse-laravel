@@ -18,6 +18,7 @@ class CrudControllerCreator implements FileCreator {
     private $path;
     private $model;
     private $modelVariable;
+    private $routes;
     public function __construct() 
     {
         $this->path = ConfigState::getFileSystemConfiguration()["output_dir"]."/controllers";
@@ -31,6 +32,8 @@ class CrudControllerCreator implements FileCreator {
         }
       
         mkdir($this->path,0777,true);
+
+        $this->routes;
     }
 
     public function setTable(Table $table) : void {
@@ -66,6 +69,8 @@ class CrudControllerCreator implements FileCreator {
         ));
 
         Interactor::sendSucceessMessage("Created :{$this->fileName}");
+
+        $this->generateTableRoutes();
 
     }
 
@@ -265,5 +270,33 @@ class CrudControllerCreator implements FileCreator {
     private function writeToFile(string $content) : void {
 
         file_put_contents("{$this->path}/{$this->fileName}",$content);
+    }
+
+    private function generateTableRoutes() : void {
+        $this->routes .= 
+        "\$router->group(['prefix' => '{$this->table->getName()}'], function () use(\$router) {\n".
+            "\t\$router->get('index','{$this->className}@index');\n".
+            "\t\$router->post('create','{$this->className}@create');\n".
+            "\t\$router->put('{id}/update','{$this->className}@update');\n".
+            "\t\$router->delete('{id}/destroy','{$this->className}@destroy');\n".
+        "});\n\n";
+    }
+
+    public function __destruct()
+    {
+        $routePath = ConfigState::getFileSystemConfiguration()["output_dir"]."/routes";
+
+                
+        if(file_exists($routePath)) {
+
+            array_map('unlink', glob($routePath."/*.*"));
+
+            rmdir($routePath);
+        }
+      
+        mkdir($routePath,0777,true);
+
+        $content = "<?php \n\n".$this->routes;
+        file_put_contents("{$routePath}/web.php",$content);
     }
 }

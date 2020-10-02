@@ -132,9 +132,6 @@ class BaseInterpreter implements Interpreter {
         return new GenerateCrudControllersAction($tableName);
     }
 
-    private function generateCrudRoutes(?string $tableName) {
-        return new GenerateCrudRoutesAction($tableName);
-    }
 
 
 }

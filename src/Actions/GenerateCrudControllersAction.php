@@ -10,10 +10,11 @@ use App\State\ConnectionState;
 
 class GenerateCrudControllersAction implements Action {
 
-    
+  
     public function __construct(?string $tableName) {
 
         $this->tableName = $tableName;
+       
 
     }
 
