@@ -14,6 +14,7 @@ class SeedersCreator implements FileCreator {
     private $className;
     private $fileName;
     private $path;
+    private $seedersList;
     public function __construct() 
     {
         $this->path = ConfigState::getFileSystemConfiguration()["output_dir"]."/seeders";
@@ -27,6 +28,8 @@ class SeedersCreator implements FileCreator {
         }
       
         mkdir($this->path,0777,true);
+
+        $this->seedersList = "";
     }
 
     public function setTable(Table $table) : void {
@@ -35,6 +38,8 @@ class SeedersCreator implements FileCreator {
         $this->className = str_replace(" ", "", ucwords(str_replace("_", " ", $table->getName())))."TableSeeder";
 
         $this->fileName = $this->className.".php";
+
+        $this->seedersList .= "\t\t\$this->call({$this->className}::class);\n";
     }
 
     public function createFile() : void {   
@@ -48,6 +53,8 @@ class SeedersCreator implements FileCreator {
         Interactor::sendSucceessMessage("Created :{$this->fileName}");
 
     }
+
+   
 
     private function makeContent() : string {
         $content = "";
@@ -101,5 +108,32 @@ class SeedersCreator implements FileCreator {
     private function writeToFile(string $content) : void {
 
         file_put_contents("{$this->path}/{$this->fileName}",$content);
+    }
+
+    public function __destruct()
+    {
+        $properties = "".
+        "<?php\n\n".
+        
+        "/**\n".
+        "* Run the database seeds.\n".
+        "*\n".
+        "* @return void\n".
+        "*/\n\n".
+
+        "namespace Database\Seeders;\n\n".
+
+        "use Illuminate\Database\Seeder;\n\n".
+
+        "class DatabaseSeeder extends Seeder\n{\n".
+
+            "\tpublic function run()\n\t{\n".
+
+                $this->seedersList.
+
+            "\t}\n".
+
+        "}";
+        file_put_contents("{$this->path}/DatabaseSeeder.php",$properties);
     }
 }

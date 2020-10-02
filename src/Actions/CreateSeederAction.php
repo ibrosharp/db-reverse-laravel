@@ -34,6 +34,8 @@ class CreateSeederAction implements Action {
                 $creator->setTable($table);
         
                 $creator->createFile();
+
+                
             }
 
         }else {
@@ -45,6 +47,8 @@ class CreateSeederAction implements Action {
             $creator->setTable($table);
     
             $creator->createFile();
+
+          
     
         }
 
